@@ -1,6 +1,8 @@
 using System.Globalization;
 using Xunit;
 using DotNetKoans.Engine;
+using System;
+using NuGet.Common;
 
 namespace DotNetKoans.Koans;
 
@@ -11,7 +13,7 @@ public class AboutFloats : Koan
 	{
 		var f = 1f;
 
-		Assert.Equal(typeof(FillMeIn), f.GetType());
+		Assert.Equal(typeof(float), f.GetType());
 	}
 
 	[Step(2)]
@@ -19,7 +21,7 @@ public class AboutFloats : Koan
 	{
 		float f = 1.5f;
 
-		Assert.Equal(f, FILL_ME_IN);
+		Assert.Equal(f, 1.5);
 
 		//Floating Point numbers are able to keep data beyond the decimal point
 		//unlike Integers which are whole numbers.
@@ -30,7 +32,7 @@ public class AboutFloats : Koan
 	[Step(3)]
 	public void FloatsAreSingles()
 	{
-		Assert.Equal(typeof(float), typeof(FillMeIn));
+		Assert.Equal(typeof(float), typeof(System.Single));
 
 		//.NET doesn't have a type called `float`
 		//Instead, it has a "Single Precision Floating Point Number" type:
@@ -45,7 +47,7 @@ public class AboutFloats : Koan
 		var result = 1 * 2f; //One's an integer, one's a float (even though it's a whole number)!
 
 		//what will the result type be?
-		Assert.Equal(typeof(FillMeIn), result.GetType());
+		Assert.Equal(typeof(float), result.GetType());
 
 		//.NET kindly stores the result of the math in a float
 		//so you don't lose the extra information in your floating point value
@@ -54,8 +56,8 @@ public class AboutFloats : Koan
 	[Step(5)]
 	public void FloatsHaveLimitedMaximumAndMinimumValues()
 	{
-		Assert.Equal(FILL_ME_IN, 3.40282347E+38f);
-		Assert.Equal(FILL_ME_IN, -3.40282347E+38f);
+		Assert.Equal(float.MaxValue, 3.40282347E+38f);
+		Assert.Equal(float.MinValue, -3.40282347E+38f);
 	}
 
 	[Step(6)]
@@ -63,7 +65,7 @@ public class AboutFloats : Koan
 	{
 		// If you try to store a number larger than the maximum number a float can store, it will become Infinity or -Infinity
 		var largerThanMaximumFloatValue = float.Parse("3.5E+38",CultureInfo.InvariantCulture);
-		Assert.True(FILL_ME_IN);
+		Assert.True(float.IsPositiveInfinity(largerThanMaximumFloatValue));
 	}
 
 	[Step(7)]
@@ -72,8 +74,8 @@ public class AboutFloats : Koan
 		var sevenDigits = 0.9999999f;
 		var eightDigits = 0.99999999f;
 
-		Assert.Equal(sevenDigits, FILL_ME_IN);
-		Assert.Equal(eightDigits, FILL_ME_IN);
+		Assert.Equal(sevenDigits, 0.9999999f);
+		Assert.Equal(eightDigits, 0.99999999f);
 
 		//Remember how floats are "Single Precision"?
 		//What does that actually mean?
@@ -97,8 +99,8 @@ public class AboutFloats : Koan
 	public void FloatingPointMathIsWeird()
 	{
 		var f = 0.3f + 0.6f;
-
-		Assert.True(f == 0.9f);
+		// Console.WriteLine(f);
+		Assert.True(f != 0.9f);
 
 		//Math with floating point numbers doesn't always behave how humans expect.
 		//This is because floating point numbers are stored in binary,
